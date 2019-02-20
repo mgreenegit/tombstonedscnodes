@@ -12,7 +12,7 @@
     "variables": {
         "runbook": {
             "Name": "TombstoneDSCNodes",
-            "Uri": "https://raw.githubusercontent.com/mgreenegit/tombstonedscnodes/master/tombstonedscnodes.ps1",
+            "Uri": "https://raw.githubusercontent.com/mgreenegit/tombstonedscnodes/master/TombstoneDSCNodes.ps1",
             "Description": "This script provides an example for how to use a runbook in Azure Automation to tombstone stale DSC nodes from State Configuration.",
             "Version": "1.0.0"
         }
