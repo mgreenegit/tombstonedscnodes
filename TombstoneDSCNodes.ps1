@@ -47,9 +47,9 @@ Param(
     [string]$AutomationAccountName
 )
 #Variables
-$TombstoneAction = $true
+$TombstoneAction = $false
 $TombstoneDays = 1
-$UnregisterAction = $true
+$UnregisterAction = $false
 $UnregisterDays = 3
 
 # Authenticate with Azure.
