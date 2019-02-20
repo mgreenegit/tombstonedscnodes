@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0",
+    "parameters": {
+        "accountName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Azure Automation account to deploy to."
+            }
+        }
+    },
+    "variables": {
+        "runbook": {
+            "Name": "TombstoneDSCNodes",
+            "Uri": "https://raw.githubusercontent.com/mgreenegit/tombstonedscnodes/master/tombstonedscnodes.ps1",
+            "Description": "This script provides an example for how to use a runbook in Azure Automation to tombstone stale DSC nodes from State Configuration.",
+            "Version": "1.0.0"
+        }
+    },
+    "resources": [
+        {
+            "name": "[parameters('accountName')]",
+            "type": "Microsoft.Automation/automationAccounts",
+            "apiversion": "2018-06-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "sku": {
+                    "name": "Basic"
+                }
+            },
+            "resources": [
+                {
+                    "name": "[variables('runbook').Name]",
+                    "type": "runbooks",
+                    "apiversion": "2018-06-30",
+                    "location": "[resourceGroup().location]",
+                    "dependsOn": [
+                        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+                    ],
+                    "properties": {
+                        "runbookType": "PowerShell",
+                        "logProgress": false,
+                        "logVerbose": false,
+                        "description": "[variables('runbook').Description]",
+                        "publishContentLink": {
+                            "uri": "[variables('runbook').Uri]",
+                            "version": "[variables('runbook').Version]"
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "outputs": {}
+}
